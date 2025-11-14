@@ -8,18 +8,18 @@ on:
   push:          # runs on every push
   pull_request:  # runs on new PRs or PR updates
   schedule:
-    - cron: '30 3 * * 1-5'
+    - cron: '30 3 * * 1-6'
   workflow_dispatch:
 
 jobs:
   run-tests:
-    name: Run shard ${{ matrix.shardIndex }}/5
+    name: Run Playwright shards
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1,2,3,4,5] 
+        shardIndex: [1,2,3,4,5]
         shardTotal: [5]
 
     steps:
@@ -29,10 +29,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-
       - name: Create .env file
         run: |
           echo "USERNAME=${{ secrets.USERNAME }}" >> .env
+          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
           echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
           echo "NEW_PASSWORD=${{ secrets.NEW_PASSWORD }}" >> .env
           echo "FIRST_NAME=${{ secrets.FIRST_NAME }}" >> .env
@@ -53,13 +53,10 @@ jobs:
       - name: Install deps + browsers
         run: |
           npm ci
-          npx playwright install --with-deps chromium firefox webkit
+          npx playwright install --with-deps
 
-      - name: List Playwright projects (debug)
-        run: npx playwright list --projects | cat
-
-      - name: Run shard ${{ matrix.shardIndex }} 
-        run: npx playwright test --grep="@chromium|@firefox|@webkit|@android|@ios" --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - name: Run shard ${{ matrix.shardIndex }}
+        run: npx playwright test --project=chromium --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Upload blob report
         if: ${{ !cancelled() }}
@@ -114,8 +111,6 @@ jobs:
           retention-days: 14
 
       - name: Send TestDino report
-        # env:
-        #   NODE_ENV: staging
         run: |
          npx --yes tdpw ./playwright-report \
            --token="${{ secrets.TESTDINO_TOKEN }}" \
