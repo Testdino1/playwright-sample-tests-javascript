@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
 
-test('test @chromium', async ({ page }) => {
+test('test', {tag: '@chromium'}, async ({ page }) => {
   await page.goto('https://github.com/login');
   await expect(page).toHaveScreenshot('github-login.png');
   await page.getByRole('textbox', { name: 'Username or email address' }).click();

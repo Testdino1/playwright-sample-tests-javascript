@@ -29,7 +29,7 @@ async function logout() {
 }
 
 
-test('Verify that User Can Add, Edit, and Delete Addresses after Logging In @ios', async () => {
+test('Verify that User Can Add, Edit, and Delete Addresses after Logging In', {tag: '@ios'}, async () => {
     await login();
 
   await test.step('Verify that user is able to add address successfully', async () => {
@@ -51,7 +51,7 @@ test('Verify that User Can Add, Edit, and Delete Addresses after Logging In @ios
   });
 });
 
-test('Verify that the New User is able to add Addresses in the Address section @andriod', async () => {
+test('Verify that the New User is able to add Addresses in the Address section', {tag: '@android'}, async () => {
     await login();
     await allPages.userPage.clickOnUserProfileIcon();
     await allPages.userPage.clickOnAddressTab();
@@ -60,7 +60,7 @@ test('Verify that the New User is able to add Addresses in the Address section @
     await allPages.userPage.fillAddressForm();
 });
 
-test('Verify that user can purchase multiple quantities in a single order @andriod', async () => {
+test('Verify that user can purchase multiple quantities in a single order', {tag: '@android'}, async () => {
     const productName = 'GoPro HERO10 Black';
     await login();
     await allPages.inventoryPage.clickOnShopNowButton();

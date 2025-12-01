@@ -22,12 +22,12 @@ async function logout() {
   await allPages.loginPage.clickOnLogoutButton();
 }
 
-test('Verify that user can login and logout successfully @chromium', async () => {
+test('Verify that user can login and logout successfully', {tag: '@chromium'}, async () => {
   await login();
   await logout();
 });
 
-test('Verify that the new user is able to Sign Up, Log In, and Navigate to the Home Page Successfully @chromium', async () => {
+test('Verify that the new user is able to Sign Up, Log In, and Navigate to the Home Page Successfully', {tag: '@chromium'}, async () => {
     const email = `test+${Date.now()}@test.com`;
     const firstName = 'Test';
     const lastName = 'User';
