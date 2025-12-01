@@ -73,6 +73,7 @@ test('Verify that user can edit and delete a product review', async () => {
     await allPages.allProductsPage.assertAllProductsTitle();
     await allPages.allProductsPage.clickNthProduct(1);
   })
+  
 
   await test.step('Submit a product review and verify submission', async () => {
     await allPages.productDetailsPage.clickOnReviewsTab();
