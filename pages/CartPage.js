@@ -124,6 +124,10 @@ class CartPage extends BasePage{
         await this.page.waitForTimeout(2000);
         await this.page.locator(this.locators.checkoutButton).click({ force: true });
     }
+
+    async verifyIncreasedQuantity(expectedQuantity) {
+        await expect(this.page.locator(this.locators.cartItemQuantity)).toHaveText(expectedQuantity);
+    }
 }
 
 export default CartPage;

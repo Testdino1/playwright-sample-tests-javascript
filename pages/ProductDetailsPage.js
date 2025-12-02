@@ -17,7 +17,16 @@ class ProductDetailsPage extends BasePage{
         addToCartButton: 'ADD TO CART',
         headerCartIcon: 'header-cart-icon',
         productAdditionalInfoTab : `[data-testid="additional-info-tab"]`,
-        productReviewsTab : `[data-testid="reviews-tab"]`
+        productReviewsTab : `[data-testid="reviews-tab"]`,
+        writeReviewBtn: `//button[@data-testid="write-review-button"]`,
+        yourNameInput: `[data-testid="review-form-name-input"]`,
+        emailInput: `[data-testid="review-form-email-input"]`,
+        ratingStars: `[data-testid="review-form-rating-4"]`,
+        reviewTitleInput: `[data-testid="review-form-title-input"]`,
+        giveYourOpinionInput: `[data-testid="review-form-review-input"]`,
+        submitBtn: `[data-testid="review-form-submit-button"]`,
+        editReviewBtn: `[data-testid="edit-review-button"]`,
+        deleteReviewBtn: `[data-testid="delete-review-button"]`
 
     }
 
@@ -84,6 +93,47 @@ class ProductDetailsPage extends BasePage{
 
     async clickCartIcon() {
         await this.getCartIcon().click();
+    }
+
+    async clickOnWriteAReviewBtn() {
+        await this.page.locator(this.locators.writeReviewBtn).click();
+    }
+
+    async fillReviewForm() {
+        await this.page.fill(this.locators.yourNameInput, 'John Doe');
+        await this.page.fill(this.locators.emailInput, 'testing@gmail.com');
+        await this.page.click(this.locators.ratingStars);
+        await this.page.fill(this.locators.reviewTitleInput, 'Great Product');
+        await this.page.fill(this.locators.giveYourOpinionInput, 'This product exceeded my expectations. Highly recommend!');
+        await this.page.click(this.locators.submitBtn);
+    }
+    async assertSubmittedReview({ name, title, opinion }) {
+        await this.page.waitForTimeout(3000); // Wait for 1 second to ensure the form is ready
+        await expect(this.page.locator(`text=${name}`)).toBeVisible();
+        await expect(this.page.locator(`text=${title}`)).toBeVisible();
+        await expect(this.page.locator(`text=${opinion}`)).toBeVisible();
+    }
+
+    async clickOnEditReviewBtn() {
+        await this.page.locator(this.locators.editReviewBtn).click();
+    }
+
+    async updateReviewForm() {
+        await this.page.waitForTimeout(3000); // Wait for 1 second to ensure the form is ready
+        await this.page.fill(this.locators.reviewTitleInput, 'Updated Review Title');
+        await this.page.fill(this.locators.giveYourOpinionInput, 'This is an updated review opinion.');
+        await this.page.click(this.locators.submitBtn);
+    }
+
+    async assertUpdatedReview({ title, opinion }) {
+        await this.page.waitForTimeout(3000); // Wait for 1 second to ensure the form is ready
+        await expect(this.page.locator(`text=${title}`)).toBeVisible();
+        await expect(this.page.locator(`text=${opinion}`)).toBeVisible();
+    }
+
+    async clickOnDeleteReviewBtn() {
+        await this.page.locator(this.locators.deleteReviewBtn).click();
+        await this.page.keyboard.press('Enter');
     }
 }
 

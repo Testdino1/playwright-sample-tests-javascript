@@ -9,6 +9,7 @@ import CheckoutPage from "./CheckoutPage";
 import OrderPage from "./OrderPage"; // Import OrderPage
 import UserPage from "./UserPage"; // Import UserPage
 import OrderDetailsPage from "./OrderDetailsPage";
+import ContactUsPage from "./ContactUsPage";
 
 class AllPages {
     constructor(page) {
@@ -24,6 +25,8 @@ class AllPages {
         this.orderPage = new OrderPage(page); // Instantiate OrderPage
         this.userPage = new UserPage(page); // Instantiate UserPage
         this.orderDetailsPage = new OrderDetailsPage(page);
+        this.contactUsPage = new ContactUsPage(page); 
+
     }
 }
 

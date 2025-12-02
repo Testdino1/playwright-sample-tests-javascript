@@ -23,7 +23,8 @@ class HomePage extends BasePage{
             AddCartNotification: `div[role="status"][aria-live="polite"]:has-text("Added to the cart")`,
             priceRangeSlider2 : `[data-testid="all-products-price-range-input-1"]`,
             priceRangeSlider1 : `[data-testid="all-products-price-range-input-0"]`,
-            filterButton : `[data-testid="all-products-filter-toggle"]`
+            filterButton : `[data-testid="all-products-filter-toggle"]`,
+            aboutUsTitle: `[data-testid="about-us-title"]`,
         }
     }
 
@@ -88,6 +89,25 @@ class HomePage extends BasePage{
         return this.page.locator(this.locators.navbar.showNowButton);
     }
 
+    async clickOnContactUsLink() {
+        await this.getContactUsNav().click();
+    }
+
+    async clickBackToHomeButton() {
+        await this.getHomeNav().click();
+    }
+
+    async assertHomePage() {
+        await expect(this.page.locator(this.locators.navbar.homeNav)).toBeVisible({ timeout: 10000 });
+    }
+
+    async clickAboutUsNav() {
+        await this.getAboutUsNav().click();
+    }
+    
+    async assertAboutUsTitle() {
+        await expect(this.page.locator(this.locators.navbar.aboutUsTitle)).toBeVisible({ timeout: 10000 });
+    }
 }
 
 export default HomePage;
