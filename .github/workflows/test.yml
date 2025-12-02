@@ -66,6 +66,7 @@ jobs:
           path: ./blob-report
           retention-days: 1
 
+          
   merge-reports:
     name: Merge Reports
     needs: run-tests
@@ -115,4 +116,5 @@ jobs:
          npx --yes tdpw ./playwright-report \
            --token="${{ secrets.TESTDINO_TOKEN }}" \
            --upload-html \
+           --upload-traces \
            --verbose
