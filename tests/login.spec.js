@@ -24,7 +24,7 @@ async function logout() {
   await allPages.loginPage.clickOnLogoutButton();
 }
 
-test.only(
+test(
   'Verify login & logout functionality',
   { tag: '@chromium' },
   async ({ page }, testInfo) => {
