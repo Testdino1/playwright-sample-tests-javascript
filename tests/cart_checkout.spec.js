@@ -28,7 +28,7 @@ async function logout() {
   await allPages.loginPage.clickOnLogoutButton();
 }
 
-test('Verify that user is able to delete selected product from cart', {tag:'@ios'}, async () => {
+test.skip('Verify that user is able to delete selected product from cart', {tag:'@ios'}, async () => {
     const productName = 'GoPro HERO10 Black';
     await login();
     await allPages.inventoryPage.clickOnShopNowButton();

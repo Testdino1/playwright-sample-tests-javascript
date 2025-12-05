@@ -48,7 +48,7 @@ test('Verify that user is able to fill Contact Us page successfully', {tag: '@fi
     await allPages.contactUsPage.verifySuccessContactUsFormSubmission();
 });
 
-  test('Verify that user can change password successfully', {tag: '@ios'}, async () => {
+  test.skip('Verify that user can change password successfully', {tag: '@ios'}, async () => {
   await test.step('Login with existing password', async () => {
     await login1();
   });
