@@ -380,3 +380,4 @@ test('Verify that user is able to submit a product review', {tag: '@webkit'}, as
     });
   })
 });
+
