@@ -28,12 +28,12 @@ async function logout() {
   await allPages.loginPage.clickOnLogoutButton();
 }
 
-test('Verify that user can login and logout successfully', {tag: '@chromium | @smoke'}, async () => {
+test('Verify that user can login and logout successfully', {tag: '@chromium'}, async () => {
   await login();
   await logout();
 });
 
-test('Verify that all the navbar are working properly', {tag: '@chromium | @smoke'}, async () => {
+test('Verify that all the navbar are working properly', {tag: '@chromium'}, async () => {
     await login();
     await allPages.homePage.clickBackToHomeButton();
     // await allPages.homePage.assertHomePage();
@@ -45,7 +45,7 @@ test('Verify that all the navbar are working properly', {tag: '@chromium | @smok
     await allPages.homePage.assertAboutUsTitle();
 }); 
 
-test('Verify that user can edit and delete a product review', {tag: '@chromium | @smoke'}, async () => {
+test('Verify that user can edit and delete a product review', {tag: '@chromium'}, async () => {
   await test.step('Login as existing user and navigate to a product', async () => {
     await login();
   })
