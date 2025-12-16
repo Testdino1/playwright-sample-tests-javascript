@@ -33,7 +33,7 @@ test('Verify that user can login and logout successfully', {tag: '@chromium'}, a
   await logout();
 });
 
-test('Verify that all the navbar are working properly', {tag: '@chromium'}, async () => {
+test('Verify that all the navbar are working properly', {tag: '@webkit'}, async () => {
     await login();
     await allPages.homePage.clickBackToHomeButton();
     // await allPages.homePage.assertHomePage();
