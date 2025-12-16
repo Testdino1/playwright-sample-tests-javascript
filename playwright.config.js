@@ -8,7 +8,7 @@ export default defineConfig({
   snapshotDir: './__screenshots__',  // ✅ Baseline image storage
   fullyParallel: true,
   forbidOnly: isCI,
-  retries: isCI ? 1 : 0,
+  retries: isCI ? 1 : 1,
   workers: isCI ? 5 : 5,
 
   timeout: 60 * 1000,
@@ -50,17 +50,30 @@ export default defineConfig({
       use: { ...devices['Pixel 5'] },
       grep: /@android/, // only run tests tagged @android
     },
-
+      {
+        name: 'ios',
+        use: { ...devices['iPhone 12'] },
+        grep: /@ios/, // only run tests tagged @ios
+      },
+      {
+        name: 'smoke',
+        use: { ...devices['Desktop Chrome'] },
+        grep: /@smoke/, // only run tests tagged @smoke
+      },
+      
     {
-      name: 'smoke',
-      use: { ...devices['Desktop Chrome'] },
-      grep: /@smoke/, // only run tests tagged @smoke
-    },
-    
-    {
-      name: 'ios',
-      use: { ...devices['iPhone 12'] },
-      grep: /@ios/, // only run tests tagged @ios
+      name: 'api',
+      use: { 
+        ...devices['Desktop Chrome'],
+        extraHTTPHeaders: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Referer': 'https://reqres.in/',
+          'Origin': 'https://reqres.in'
+        }
+      },
+      grep: /@api/, // only run tests tagged @api
     },
   ],
 });
