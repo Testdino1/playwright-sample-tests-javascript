@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
 
-test.skip('test', {tag: '@chromium'}, async ({ page }) => {
+test('test', {tag: '@chromium'}, async ({ page }) => {
   await test.step('Test visual comparison', async () => {
   await page.goto('https://github.com/login');
   });
