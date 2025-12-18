@@ -38,7 +38,9 @@ class HomePage extends BasePage{
     }
 
     async clickOnShopNowButton() {
-        await this.page.locator(this.locators.navbar.showNowButton).click();
+        const shopNowBtn = this.page.locator(this.locators.navbar.showNowButton);
+        await shopNowBtn.waitFor({ state: 'visible', timeout: 10000 });
+        await shopNowBtn.click();
     }
 
     getProductImage() {

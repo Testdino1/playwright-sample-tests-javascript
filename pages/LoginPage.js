@@ -49,6 +49,11 @@ class LoginPage extends BasePage{
 
     async clickOnUserProfileIcon() {
         await this.page.locator(this.locators.userIcon).click();
+        // Wait for dropdown menu to appear
+        await this.page.waitForSelector(this.locators.logoutButton, { 
+            state: 'visible', 
+            timeout: 5000 
+        });
     }
 
     async assertLoginPage() {
@@ -66,7 +71,9 @@ class LoginPage extends BasePage{
     }
 
     async clickOnLogoutButton() {
-        await this.page.locator(this.locators.logoutButton).click();
+        const logoutBtn = this.page.locator(this.locators.logoutButton);
+        await logoutBtn.waitFor({ state: 'visible', timeout: 10000 });
+        await logoutBtn.click();
     }
     async validateSignInPage() {
         await expect(this.getLoginPageTitle()).toBeVisible();

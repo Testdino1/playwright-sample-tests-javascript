@@ -31,7 +31,9 @@ class InventoryPage extends BasePage {
     }
 
     async clickOnShopNowButton() {
-        await this.page.click(this.locators.shopNowBtn);
+        const shopNowBtn = this.page.locator(this.locators.shopNowBtn);
+        await shopNowBtn.waitFor({ state: 'visible', timeout: 10000 });
+        await shopNowBtn.click();
         await expect(this.page.locator(this.locators.allProductsTitle)).toBeVisible();
     }
     async searchProduct(productName) {

@@ -24,8 +24,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1,2,3,4,5]
-        shardTotal: [5]
+        shardIndex: [1,2,3]
+        shardTotal: [3]
 
     steps:
       - uses: actions/checkout@v4
@@ -36,17 +36,17 @@ jobs:
           node-version: '18'
       - name: Create .env file
         run: |
-          echo "USERNAME=${{ secrets.USERNAME }}" >> .env
-          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
-          echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
-          echo "NEW_PASSWORD=${{ secrets.NEW_PASSWORD }}" >> .env
-          echo "FIRST_NAME=${{ secrets.FIRST_NAME }}" >> .env
-          echo "STREET_NAME=${{ secrets.STREET_NAME }}" >> .env
-          echo "CITY=${{ secrets.CITY }}" >> .env
-          echo "STATE=${{ secrets.STATE }}" >> .env
-          echo "COUNTRY=${{ secrets.COUNTRY }}" >> .env
-          echo "ZIP_CODE=${{ secrets.ZIP_CODE }}" >> .env
-     
+         echo "USERNAME=${{ secrets.USERNAME }}" >> .env
+         echo "USERNAME1=${{ secrets.USERNAME1 }}" >> .env
+         echo "PASSWORD=${{ secrets.PASSWORD }}" >> .env
+         echo "NEW_PASSWORD=${{ secrets.NEW_PASSWORD }}" >> .env
+         echo "FIRST_NAME=${{ secrets.FIRST_NAME }}" >> .env
+         echo "STREET_NAME=${{ secrets.STREET_NAME }}" >> .env
+         echo "CITY=${{ secrets.CITY }}" >> .env
+         echo "STATE=${{ secrets.STATE }}" >> .env
+         echo "COUNTRY=${{ secrets.COUNTRY }}" >> .env
+         echo "ZIP_CODE=${{ secrets.ZIP_CODE }}" >> .env
+
       - name: Cache npm dependencies
         uses: actions/cache@v3
         with:
@@ -61,7 +61,7 @@ jobs:
           npx playwright install --with-deps
 
       - name: Run shard ${{ matrix.shardIndex }}
-        run: npx playwright test --project=chromium --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: npx playwright test --grep="@chromium|@firefox|@webkit" --reporter=blob --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - name: Upload blob report
         if: ${{ !cancelled() }}
