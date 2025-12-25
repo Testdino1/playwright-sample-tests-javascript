@@ -9,6 +9,7 @@ export default defineConfig({
   forbidOnly: isCI,
   retries: isCI ? 1 : 0,
   workers: isCI ? 1 : 1,
+  
 
   timeout: 60 * 1000,
   reporter: [
