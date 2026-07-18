@@ -125,14 +125,14 @@ on:
 
 jobs:
   run-tests:
-    name: Run shard ${{ matrix.shardIndex }}/5
+    name: Run shard ${{ matrix.shardIndex }}/10
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1, 2, 3, 4, 5]
-        shardTotal: [5]
+        shardIndex: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        shardTotal: [10]
 
     steps:
       - name: Checkout repo
@@ -177,8 +177,8 @@ jobs:
         run: |
           npx playwright test \
             --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} \
-            --grep="@chromium|@firefox|@webkit|@android|@ios|@api" \
-            
+            --workers=3 \
+            --grep="@chromium|@firefox|@webkit|@android|@ios|@api"
       # ✅ Upload blob report (needed for merge)
       - name: Upload blob report
         if: ${{ !cancelled() }}

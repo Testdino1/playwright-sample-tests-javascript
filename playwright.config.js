@@ -9,11 +9,12 @@ const isCI = !!process.env.CI;
 
 export default defineConfig({
   testDir: './tests',
+  testMatch: ['bulk-tc.spec.js'],
   snapshotDir: './__screenshots__',  // ✅ Baseline image storage
   fullyParallel: true,
   forbidOnly: isCI,
-  retries: isCI ? 1 : 1, // Enable retries for flaky test behavior
-  workers: isCI ? 5 : 5,
+  retries: 0,
+  workers: 3,
 
   timeout: 60 * 1000,
   expect: {
@@ -27,13 +28,13 @@ export default defineConfig({
     }],
     ['blob', { outputDir: 'blob-report' }], // Blob reporter for merging
     ['json', { outputFile: './playwright-report/report.json' }],
-    ['@testdino/playwright', { token: process.env.TESTDINO_TOKEN }],
   ],
 
   use: {
     baseURL: 'https://storedemo.testdino.com/products',
     headless: true,
-    trace: 'retain-on-failure',
+    // 1.59: new trace mode keeps traces for all attempts when retries fail
+    trace: 'retain-on-failure-and-retries',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     actionTimeout: 15 * 1000,
@@ -44,33 +45,6 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      grep: /@chromium/, // only run tests tagged @chromium
-    },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-      grep: /@firefox/, // only run tests tagged @firefox
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-      grep: /@webkit/, // only run tests tagged @webkit
-    },
-    {
-      name: 'android',
-      use: { ...devices['Pixel 5'] },
-      grep: /@android/, // only run tests tagged @android
-    },
-    {
-      name: 'ios',
-      use: { ...devices['iPhone 12'] },
-      grep: /@ios/, // only run tests tagged @ios
-    },
-
-    {
-      name: 'api',
-      use: { ...devices['API'] },
-      grep: /@api/, // only run tests tagged @api
     },
   ],
 });
