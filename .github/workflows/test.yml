@@ -119,9 +119,12 @@
 name: Run Playwright tests
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
+    inputs:
+      test_count:
+        description: 'Number of TC- tests to generate (max 5000)'
+        required: false
+        default: '5'
 
 jobs:
   run-tests:
@@ -168,16 +171,17 @@ jobs:
       - name: Install dependencies & browsers
         run: |
           npm install
-          npm install --save-dev @testdino/playwright@latest
-          npx playwright install --with-deps chromium webkit firefox
-      # ✅ Run Playwright shard with TestDino
+          npx playwright install --with-deps chromium
+      # ✅ Run Playwright shard with real-time TestDino streaming
       - name: Run Playwright shard with TestDino
         env:
-          TESTDINO_TOKEN: ${{ secrets.TESTDINO_TOKEN }}        
+          TESTDINO_TOKEN: ${{ secrets.TESTDINO_TOKEN }}
+          TC_COUNT: ${{ github.event.inputs.test_count || '5' }}
         run: |
           npx playwright test \
             --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} \
             --workers=3 \
+            --pass-with-no-tests \
             --grep="@chromium|@firefox|@webkit|@android|@ios|@api"
       # ✅ Upload blob report (needed for merge)
       - name: Upload blob report

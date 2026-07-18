@@ -28,15 +28,16 @@ export default defineConfig({
     }],
     ['blob', { outputDir: 'blob-report' }], // Blob reporter for merging
     ['json', { outputFile: './playwright-report/report.json' }],
+    ['@testdino/playwright', { token: process.env.TESTDINO_TOKEN }], // Real-time streaming to TestDino
   ],
 
   use: {
     baseURL: 'https://storedemo.testdino.com/products',
     headless: true,
-    // 1.59: new trace mode keeps traces for all attempts when retries fail
-    trace: 'retain-on-failure-and-retries',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    // Always record so every artifact reaches TestDino
+    trace: 'on',
+    screenshot: 'on',
+    video: 'on',
     actionTimeout: 15 * 1000,
     navigationTimeout: 30 * 1000,
   },
