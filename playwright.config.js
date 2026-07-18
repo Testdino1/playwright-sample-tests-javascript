@@ -28,11 +28,10 @@ export default defineConfig({
     }],
     ['blob', { outputDir: 'blob-report' }], // Blob reporter for merging
     ['json', { outputFile: './playwright-report/report.json' }],
-    ['@testdino/playwright', {
-      token: process.env.TESTDINO_TOKEN,
-      // Group all CI shards into a single TestDino run (undefined locally)
-      ciRunId: process.env.GITHUB_RUN_ID,
-    }], // Real-time streaming to TestDino
+    // NOTE: ciRunId (shard grouping) intentionally NOT set — runs streamed with
+    // ciRunId are ingested but never appear on the staging dashboard (backend bug).
+    // Re-add `ciRunId: process.env.GITHUB_RUN_ID` once server-side grouping is fixed.
+    ['@testdino/playwright', { token: process.env.TESTDINO_TOKEN }], // Real-time streaming to TestDino
   ],
 
   use: {
