@@ -177,6 +177,14 @@ jobs:
             --workers=7 \
             --pass-with-no-tests \
             --grep="@chromium|@firefox|@webkit|@android|@ios|@api"
+      # ✅ Upload test results to BuildPulse (runs even when tests fail)
+      - name: Upload test results to BuildPulse
+        if: always()
+        uses: BuildPulseLLC/test-reporter-action@v3
+        with:
+          api-token: ${{ secrets.BUILDPULSE_API_TOKEN }}
+          path: junit.xml
+
       # ✅ Upload blob report (needed for merge)
       - name: Upload blob report
         if: ${{ !cancelled() }}

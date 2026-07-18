@@ -28,6 +28,8 @@ export default defineConfig({
     }],
     ['blob', { outputDir: 'blob-report' }], // Blob reporter for merging
     ['json', { outputFile: './playwright-report/report.json' }],
+    ['junit', { outputFile: 'junit.xml' }], // JUnit XML for BuildPulse
+
     // NOTE: ciRunId (shard grouping) intentionally NOT set — runs streamed with
     // ciRunId are ingested but never appear on the staging dashboard (backend bug).
     // Re-add `ciRunId: process.env.GITHUB_RUN_ID` once server-side grouping is fixed.
