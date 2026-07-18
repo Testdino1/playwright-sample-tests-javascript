@@ -8,7 +8,7 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "1.59.0",
-    "@testdino/playwright": "^1.0.7",
+    "@testdino/playwright": "file:vendor/testdino-playwright-2.0.0.tgz",
     "@types/node": "^24.1.0"
   },
   "dependencies": {

@@ -108,13 +108,6 @@
 #           path: ./playwright-report
 #           retention-days: 14
 
-#       - name: Send TestDino report
-#         run: |
-#          npx --yes tdpw ./playwright-report \
-#            --token="${{ secrets.TESTDINO_TOKEN }}" \
-#            --upload-html \
-#            --verbose
-
 
 name: Run Playwright tests
 
@@ -176,6 +169,7 @@ jobs:
       - name: Run Playwright shard with TestDino
         env:
           TESTDINO_TOKEN: ${{ secrets.TESTDINO_TOKEN }}
+          TESTDINO_SERVER_URL: https://stg-analytics.testdino.com
           TC_COUNT: ${{ github.event.inputs.test_count || '5' }}
         run: |
           npx playwright test \

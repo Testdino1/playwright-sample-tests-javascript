@@ -5,8 +5,8 @@ Automated end-to-end tests for Ecommerce Demo store using [Playwright](https://p
 ---
 <p align="left">
   <a href="https://github.com/testdino-hq/playwright-sample-tests-javascript/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/testdino-hq/playwright-sample-tests-javascript/test.yml?branch=main&label=CI&logo=none" alt="CI Status"></a>
-  <a href="https://www.npmjs.com/package/tdpw"><img src="https://img.shields.io/npm/v/tdpw?color=blue" alt="npm version"></a>
-  <a href="https://www.npmjs.com/package/tdpw"><img src="https://img.shields.io/npm/unpacked-size/tdpw?color=orange" alt="install size"></a>
+  <a href="https://www.npmjs.com/package/@testdino/playwright"><img src="https://img.shields.io/npm/v/%40testdino%2Fplaywright?color=blue" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/@testdino/playwright"><img src="https://img.shields.io/npm/unpacked-size/%40testdino%2Fplaywright?color=orange" alt="install size"></a>
   <a href="https://github.com/testdino-hq/playwright-sample-tests-javascript/blob/main/LICENCE"><img src="https://img.shields.io/badge/license-MIT-brightgreen" alt="MIT License"></a>
 </p>
 
@@ -52,20 +52,26 @@ npx playwright show-report
 
 ## Testdino Integration
 
-[Testdino](https://testdino.com/) enables cloud-based Playwright reporting.
+[Testdino](https://testdino.com/) enables cloud-based Playwright reporting with real-time streaming via the [`@testdino/playwright`](https://www.npmjs.com/package/@testdino/playwright) reporter.
+
+The reporter is already configured in `playwright.config.js`:
+
+```js
+reporter: [
+  ['@testdino/playwright', { token: process.env.TESTDINO_TOKEN }],
+],
+```
 
 ### Local Execution
 
-After your tests complete and the report is generated in `playwright-report`, upload it to Testdino:
+Set your API token (from the TestDino dashboard) and run tests as usual — results stream to TestDino in real time:
 
-
-
-Replace the token above with your own Testdino API key.
-
-See all available commands:
 ```sh
-npx tdpw --help
+export TESTDINO_TOKEN=YOUR_API_TOKEN
+npx playwright test
 ```
+
+You can also put the token in `.env` (see `.env.example`); it is loaded automatically.
 
 ---
 
@@ -73,11 +79,14 @@ npx tdpw --help
 
 ### GitHub Actions
 
-Add the following step to your workflow after tests and report generation:
+Add `TESTDINO_TOKEN` as a repository secret and expose it to the test step:
 
-
-
-Ensure your API key is correctly placed in the command.
+```yaml
+- name: Run Playwright tests
+  run: npx playwright test
+  env:
+    TESTDINO_TOKEN: ${{ secrets.TESTDINO_TOKEN }}
+```
 
 ---
 
