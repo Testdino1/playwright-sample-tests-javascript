@@ -28,7 +28,11 @@ export default defineConfig({
     }],
     ['blob', { outputDir: 'blob-report' }], // Blob reporter for merging
     ['json', { outputFile: './playwright-report/report.json' }],
-    ['@testdino/playwright', { token: process.env.TESTDINO_TOKEN }], // Real-time streaming to TestDino
+    ['@testdino/playwright', {
+      token: process.env.TESTDINO_TOKEN,
+      // Group all CI shards into a single TestDino run (undefined locally)
+      ciRunId: process.env.GITHUB_RUN_ID,
+    }], // Real-time streaming to TestDino
   ],
 
   use: {
