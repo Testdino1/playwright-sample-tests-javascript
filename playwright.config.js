@@ -13,7 +13,9 @@ export default defineConfig({
   snapshotDir: './__screenshots__',  // ✅ Baseline image storage
   fullyParallel: true,
   forbidOnly: isCI,
-  retries: 0,
+  // 1 retry in CI so intentionally-flaky tests register as "flaky" (pass on
+  // retry) instead of failing the shard outright.
+  retries: isCI ? 1 : 0,
   workers: 3,
 
   timeout: 60 * 1000,
